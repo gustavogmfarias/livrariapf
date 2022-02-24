@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+	<h:form>
+		<h:panelGrid columns="2">
+			<p:outputLabel value="Título: "></p:outputLabel>
+			<p:inputText value="#{livroBean.livro.titulo}"></p:inputText>
+			<p:outputLabel value="Preço: "></p:outputLabel>
+			<p:inputText value="#{livroBean.livro.preco}"></p:inputText>
+			<p:outputLabel value="Data de Publicação: "></p:outputLabel>
+			<p:calendar value="#{livroBean.livro.dataPublicacao}"
+				pattern="dd/MM/yyyy" mask="true"></p:calendar>
+
+		</h:panelGrid>
+
+		<p:fieldset legend="Autores" id="fieldAutores">
+			<h:panelGrid coluns="3">
+				<p:outputLabel value="Autor: ">
+				</p:outputLabel>
+				<p:selectOneMenu value="#{livroBean.idAutor}">
+					<f:selectItem itemLabel="Selecione..." itemValue="0"></f:selectItem>
+					<f:selectItems value="#{livroBean.autores}" var="autores"
+						itemLabel="autores.nome" itemValue="autores.id"></f:selectItems>
+				</p:selectOneMenu>
+				<p:commandButton value="Add autor" action="#{livroBean.addAutor()}"
+					update="fieldAutores" process="fieldAutores"></p:commandButton>
+			</h:panelGrid>
+			<p:dataTable value="#{livroBean.livro.autores}" var="autorAtual">
+				<p:column headerText="autores">
+					<h:outputText value="#{autorAtual.nome}"></h:outputText>
+				</p:column>
+			</p:dataTable>
+		</p:fieldset>
+		<p:commandbutton value="Gravar" action="#{livroBean.gravarAluno()}"
+			update="@form, :listLivros" process="@form"></p:commandbutton>
+
+
+	</h:form>
+
+	<h:form id="listLivros">
+		<p:dataTable value="#{livroBean.livros}" var="livros">
+			<p:column headerText="Título">
+				<h:outputText value="#{livroAtual.titulo}"></h:outputText>
+			</p:column>
+			<p:column headerText="Preço">
+				<h:outputText value="#{livroAtual.preco}"></h:outputText>
+			</p:column>
+			<p:column headerText="Data de Publicação">
+				<h:outputText value="#{livroAtual.dataDePublicacao}"></h:outputText>
+			</p:column>
+			<p:column headerText="Autores"><h:outputText value="#{livroAtual.autores}"></h:outputText></p:column>
+		</p:dataTable>
+	</h:form>
+</body>
+</html>
